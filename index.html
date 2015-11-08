@@ -5,34 +5,113 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <script>
+    (function() {
+      var supportTouch = $.support.touch,
+              scrollEvent = "touchmove scroll",
+              touchStartEvent = supportTouch ? "touchstart" : "mousedown",
+              touchStopEvent = supportTouch ? "touchend" : "mouseup",
+              touchMoveEvent = supportTouch ? "touchmove" : "mousemove";
+      $.event.special.swipeupdown = {
+          setup: function() {
+              var thisObject = this;
+              var $this = $(thisObject);
+              $this.bind(touchStartEvent, function(event) {
+                  var data = event.originalEvent.touches ?
+                          event.originalEvent.touches[ 0 ] :
+                          event,
+                          start = {
+                              time: (new Date).getTime(),
+                              coords: [ data.pageX, data.pageY ],
+                              origin: $(event.target)
+                          },
+                          stop;
+
+                  function moveHandler(event) {
+                      if (!start) {
+                          return;
+                      }
+                      var data = event.originalEvent.touches ?
+                              event.originalEvent.touches[ 0 ] :
+                              event;
+                      stop = {
+                          time: (new Date).getTime(),
+                          coords: [ data.pageX, data.pageY ]
+                      };
+
+                      // prevent scrolling
+                      if (Math.abs(start.coords[1] - stop.coords[1]) > 10) {
+                          event.preventDefault();
+                      }
+                  }
+                  $this
+                          .bind(touchMoveEvent, moveHandler)
+                          .one(touchStopEvent, function(event) {
+                      $this.unbind(touchMoveEvent, moveHandler);
+                      if (start && stop) {
+                          if (stop.time - start.time < 1000 &&
+                                  Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
+                                  Math.abs(start.coords[0] - stop.coords[0]) < 75) {
+                              start.origin
+                                      .trigger("swipeupdown")
+                                      .trigger(start.coords[1] > stop.coords[1] ? "swipeup" : "swipedown");
+                          }
+                      }
+                      start = stop = undefined;
+                  });
+              });
+          }
+      };
+      $.each({
+          swipedown: "swipeupdown",
+          swipeup: "swipeupdown"
+      }, function(event, sourceEvent){
+          $.event.special[event] = {
+              setup: function(){
+                  $(this).bind(sourceEvent, $.noop);
+              }
+          };
+      });
+
+  })();
+  </script>
 
   <script>
   var pages = [
     {
       titleCardId: '#page1TitleCard',
+      titleBackground: '#BBE8FF',
       contentId: '#page1Content'
     },
     {
       titleCardId: '#page2TitleCard',
+      titleBackground: '#A7FFE9',
       contentId: '#page2Content'
     }
   ]
-  var currentPage = 0
+  // title or content
+  var currentActivePageType = 'title';
+  var currentPage = 0;
+  var firstScrollEventOnContent = true;
 
   function renderTitleCard(index) {
     var contentToRender = $(pages[index].titleCardId);
-    console.log(contentToRender);
+    $("#contentContainer").html(contentToRender.html());
+    $("#contentContainer").css('background-color', pages[index].titleBackground);
+  }
+
+  function renderContent(index) {
+    var contentToRender = $(pages[index].contentId);
     $("#contentContainer").html(contentToRender.html());
   }
 
   $(function() {
-    var contentToRender = $(pages[0].titleCardId);
-    console.log(contentToRender);
-    $("#contentContainer").html(contentToRender.html());
-    //contentToRender.show();
+    renderTitleCard(0);
 
-    $("#contentContainer").on("swipeleft",function(){
-      console.log("swipeleft")
+    $("#contentContainer").on("swipeleft",function() {
+      if (currentActivePageType == 'content') {
+        return
+      }
 
       if (currentPage == 0) {
         renderTitleCard(1)
@@ -42,8 +121,10 @@
       }
     });
 
-    $("#contentContainer").on("swiperight",function(){
-      console.log("swiperight")
+    $("#contentContainer").on("swiperight",function() {
+      if (currentActivePageType == 'content') {
+        return
+      }
 
       if (currentPage == 1) {
         renderTitleCard(0)
@@ -52,35 +133,81 @@
 
       }
     });
-  });
 
-  $(document).on("pagecreate","#pageone",function(){
-    $(document).on("scrollstop",function(){
-      var top = $(document).scrollTop();
-      alert("Stopped scrolling! " + top);
+    $("#contentContainer").on("swipeup",function() {
+      console.log("swipe up!");
+
+      if (currentActivePageType == 'title') {
+          currentActivePageType = 'content'
+          firstScrollEventOnContent = true
+          renderContent(currentPage);
+      } else {
+
+      }
+    });
+
+    $("#contentContainer").on("scrollstop",function() {
+      if (firstScrollEventOnContent) {
+        firstScrollEventOnContent = false
+        return
+      }
+
+      if (currentActivePageType == 'title') {
+        return
+      }
+
+      var contentHeight = $(pages[currentPage].contentId).height();
+      var scrollTop = $("#contentContainer").scrollTop();
+      var containerHeight = $("#contentContainer").height();
+      if (scrollTop == 0) {
+        // we are at the top
+        console.log("at top!")
+
+        renderTitleCard(currentPage)
+        currentActivePageType = 'title'
+
+      } else if (contentHeight == (scrollTop + containerHeight)) {
+        console.log("at bottom!")
+      }
     });
   });
 </script>
 </head>
 <body>
-  <div id="contentContainer" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+  <div id="contentContainer" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; overflow-x: auto;"></div>
 
-  <div id="page1TitleCard" class="card" style="display: none;">
-    <h1>Card 1</h1>
+  <div id="page1TitleCard" class="card" style="background: color: display: none;">
+    <h1>Card 1 Title</h1>
   </div>
   <div id="page2TitleCard" class="card" style="display: none;">
-    <h1>Card 2</h1>
+    <h1>Card 2 Title</h1>
   </div>
 
   <div id="page1Content" class="card" style="display: none; background: yellow">
-    In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
+    <h1>Content for Card 1</h1>
+
+    <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
     Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
     Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
     Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-    Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.
+    Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
+
+    <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
+    Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
+    Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
+    Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
+    Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
+
+    <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
+    Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
+    Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
+    Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
+    Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
   </div>
   <div id="page2Content" class="card" style="display: none; background: blue">
-    Duis tincidunt est non magna tincidunt sollicitudin eget id ante.
+    <h1>Content for Card 2</h1>
+
+    <p>Duis tincidunt est non magna tincidunt sollicitudin eget id ante.
     Praesent in lorem dapibus, malesuada magna in, interdum lectus.
     Sed aliquam dolor dolor, eu pretium arcu dictum vel.
     Nunc ac ante sed nunc vulputate pellentesque.
@@ -90,7 +217,19 @@
     Vivamus luctus bibendum nisl, id condimentum velit porttitor non. Integer ut ultricies libero. Proin quis felis in
     lectus faucibus ultricies sed ac ex. Proin ut ex congue, placerat justo eu, dignissim lectus.
     In feugiat dui nec purus mattis suscipit.
-    Suspendisse et leo elit. Aenean sed venenatis mi, volutpat elementum erat.
+    Suspendisse et leo elit. Aenean sed venenatis mi, volutpat elementum erat.</p>
+
+    <p>Duis tincidunt est non magna tincidunt sollicitudin eget id ante.
+    Praesent in lorem dapibus, malesuada magna in, interdum lectus.
+    Sed aliquam dolor dolor, eu pretium arcu dictum vel.
+    Nunc ac ante sed nunc vulputate pellentesque.
+    Nunc sit amet ante feugiat, consequat enim ac, finibus nulla.
+    Aliquam urna erat, auctor sed sagittis eget, tempor id nisi.
+    Aliquam erat volutpat. In finibus a turpis a sollicitudin.
+    Vivamus luctus bibendum nisl, id condimentum velit porttitor non. Integer ut ultricies libero. Proin quis felis in
+    lectus faucibus ultricies sed ac ex. Proin ut ex congue, placerat justo eu, dignissim lectus.
+    In feugiat dui nec purus mattis suscipit.
+    Suspendisse et leo elit. Aenean sed venenatis mi, volutpat elementum erat.</p>
   </div>
 </body>
 </html>
