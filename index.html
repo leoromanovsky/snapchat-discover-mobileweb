@@ -6,6 +6,19 @@
 
   <style type="text/css">
     html,body{ margin:0; padding:0; height:100%; width:100%; }
+
+    #contentContainer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 1000000;
+      background: rgba(0, 0, 0, 0.9);
+      overflow: auto;
+    }
   </style>
 
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -14,7 +27,7 @@
   // Update configuration to our liking
   $( document ).on( "mobileinit", function() {
     $.extend( $.mobile , {
-      autoInitializePage: false
+      //autoInitializePage: false
     });
   });
 </script>
@@ -149,17 +162,16 @@
     });
 
     $("#contentContainer").on("swipeup",function() {
-      console.log("swipe up!");
-
-      if (currentActivePageType == 'title') {
-          currentActivePageType = 'content'
-          firstScrollEventOnContent = true
-          renderContent(currentPage);
-      } else {
-
+      if (currentActivePageType == 'content') {
+        return
       }
+
+      currentActivePageType = 'content'
+      firstScrollEventOnContent = true
+      renderContent(currentPage);
     });
 
+/*
     $("#contentContainer").on("scrollstop",function() {
       if (firstScrollEventOnContent) {
         firstScrollEventOnContent = false
@@ -184,11 +196,12 @@
         console.log("at bottom!")
       }
     });
+    */
   });
 </script>
 </head>
 <body>
-  <div id="contentContainer" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; overflow-x: scroll;"></div>
+  <div id="contentContainer"></div>
 
   <div id="page1TitleCard" class="card" style="background: color: display: none;">
     <h1>Card 1 Title</h1>
