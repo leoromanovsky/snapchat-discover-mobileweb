@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <script>
+  var pages = [
+    {
+      titleCardId: '#page1TitleCard',
+      contentId: '#page1Content'
+    },
+    {
+      titleCardId: '#page2TitleCard',
+      contentId: '#page2Content'
+    }
+  ]
+  var currentPage = 0
+
+  function renderTitleCard(index) {
+    var contentToRender = $(pages[index].titleCardId);
+    console.log(contentToRender);
+    $("#contentContainer").html(contentToRender.html());
+  }
+
+  $(function() {
+    var contentToRender = $(pages[0].titleCardId);
+    console.log(contentToRender);
+    $("#contentContainer").html(contentToRender.html());
+    //contentToRender.show();
+
+    $("#contentContainer").on("swipeleft",function(){
+      console.log("swipeleft")
+
+      if (currentPage == 0) {
+        renderTitleCard(1)
+        currentPage = 1
+      } else {
+
+      }
+    });
+
+    $("#contentContainer").on("swiperight",function(){
+      console.log("swiperight")
+
+      if (currentPage == 1) {
+        renderTitleCard(0)
+        currentPage = 0
+      } else {
+
+      }
+    });
+  });
+
+  $(document).on("pagecreate","#pageone",function(){
+    $(document).on("scrollstop",function(){
+      var top = $(document).scrollTop();
+      alert("Stopped scrolling! " + top);
+    });
+  });
+</script>
+</head>
+<body>
+  <div id="contentContainer" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0;"></div>
+
+  <div id="page1TitleCard" class="card" style="display: none;">
+    <h1>Card 1</h1>
+  </div>
+  <div id="page2TitleCard" class="card" style="display: none;">
+    <h1>Card 2</h1>
+  </div>
+
+  <div id="page1Content" class="card" style="display: none; background: yellow">
+    In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
+    Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
+    Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
+    Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
+    Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.
+  </div>
+  <div id="page2Content" class="card" style="display: none; background: blue">
+    Duis tincidunt est non magna tincidunt sollicitudin eget id ante.
+    Praesent in lorem dapibus, malesuada magna in, interdum lectus.
+    Sed aliquam dolor dolor, eu pretium arcu dictum vel.
+    Nunc ac ante sed nunc vulputate pellentesque.
+    Nunc sit amet ante feugiat, consequat enim ac, finibus nulla.
+    Aliquam urna erat, auctor sed sagittis eget, tempor id nisi.
+    Aliquam erat volutpat. In finibus a turpis a sollicitudin.
+    Vivamus luctus bibendum nisl, id condimentum velit porttitor non. Integer ut ultricies libero. Proin quis felis in
+    lectus faucibus ultricies sed ac ex. Proin ut ex congue, placerat justo eu, dignissim lectus.
+    In feugiat dui nec purus mattis suscipit.
+    Suspendisse et leo elit. Aenean sed venenatis mi, volutpat elementum erat.
+  </div>
+</body>
+</html>
