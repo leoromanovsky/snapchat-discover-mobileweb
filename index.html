@@ -1,122 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <style type="text/css">
     html,body{
-      margin:0; padding:0; overflow:hidden;
+      margin:0;
+      padding:0;
+      overflow:hidden;
       width:100%;
       height:100%;
     }
 
-    #contentContainer {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      width: 100%;
-      z-index: 1000000;
-      background: rgba(0, 0, 0, 0.9);
-      overflow: auto;
-    }
-
     .column {
       float: left;
-      display:block;
-      height:100%;
-      padding:0;
-      margin:0;
+      display: block;
+      height: 100%;
+      padding: 0;
+      margin: 0;
     }
 
-    .titleCard {
-      min-height: 400px;
+    .horizon-prev, .horizon-next {
+      position: fixed;
+      top: 50%;
+      margin-top: -24px;
+      z-index: 9999;
     }
+    .horizon-prev {
+      left: 20px;
+    }
+    .horizon-next {
+      right: 20px;
+    }
+
+    #pageSettings { background-color: #BBE8FF }
+    #page1 { background-color: #A7FFE9 }
+    #page2 { background-color: #FF80B3 }
   </style>
 
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="jquery.horizonScroll.js"></script>
+
   <script src="jquery.event.move.js"></script>
   <script src="jquery.event.swipe.js"></script>
+
+  <script src="index.js"></script>
 </head>
 <body>
-  <div class="column">
-    <div id="page1TitleCard">
+  <div class="horizon-prev"><img src="images/l-arrow.png"></div>
+  <div class="horizon-next"><img src="images/r-arrow.png"></div>
+
+  <div class="column" id="pageSettings">
+    <div>
       <div class="titleCard">
-        <h1>Card 1 Title</h1>
-      </div>
-
-      <div id="page1Content">
-        <h1>Content for Card 1</h1>
-
-        <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-          Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-          Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-          Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-          Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-        <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-          Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-          Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-          Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-          Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-        <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-          Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-          Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-          Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-          Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-        <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-          Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-          Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-          Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-          Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-        <h3>End of card 1</h3>
+        <h1>Settings</h1>
       </div>
     </div>
   </div>
-  <div class="column">
-    <div id="page2TitleCard">
+  <div class="column" id="page1">
+    <div>
       <div class="titleCard">
-        <h1>Card 2 Title</h1>
-      </div>
-
-      <div id="page2Content">
-        <div class="contentWrapper">
-          <h1>Content for Card 2</h1>
-
-          <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-            Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-            Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-            Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-            Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-          <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-            Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-            Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-            Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-            Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-          <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-            Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-            Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-            Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-            Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-          <p>In viverra, ligula eget aliquam ultricies, odio quam euismod augue, sit amet ullamcorper turpis mi vitae nunc.
-            Nam pellentesque justo eu mi blandit ultrices. In dictum lacinia felis, non ornare ex commodo id.
-            Donec sollicitudin rutrum erat ut tincidunt. Maecenas vestibulum mi ut massa fermentum, sed facilisis purus malesuada.
-            Ut pulvinar imperdiet eros eget eleifend. Ut at dui vitae nulla pellentesque eleifend.
-            Vivamus consequat dolor nulla, at sagittis arcu consectetur sodales. Sed at arcu a enim volutpat gravida viverra quis diam.</p>
-
-          <h3>End of card 2</h3>
-        </div>
+        <h1>Card 1</h1>
       </div>
     </div>
   </div>
-
+  <div class="column" id="page2">
+    <div>
+      <div class="titleCard">
+        <h1>Card 2</h1>
+      </div>
+    </div>
+  </div>
 
 <!--
   <div id="contentContainer"></div>
