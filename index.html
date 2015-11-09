@@ -66,31 +66,21 @@
     renderTitleCard(0);
 
     jQuery('#contentContainer')
-      .on("swipeleft",function() {
-        console.log("swipeleft");
-        if (currentActivePageType == 'content') {
-          return
-        }
-
-        if (currentPage == 0) {
-          renderTitleCard(1)
-          currentPage = 1
-        } else {
-
-        }
-      })
       .on("swiperight",function() {
         console.log("swiperight");
-        if (currentActivePageType == 'content') {
-          return
-        }
+        if (currentActivePageType == 'content') { return}
+        if (currentPage == 0) { return }
 
-        if (currentPage == (pages.length - 1)) {
-          renderTitleCard(0)
-          currentPage = 0
-        } else {
+        currentPage = currentPage - 1;
+        renderTitleCard(currentPage)
+      })
+      .on("swipeleft",function() {
+        console.log("swipeleft");
+        if (currentPage == (pages.length - 1)) { return }
+        if (currentActivePageType == 'content') { return }
 
-        }
+        currentPage = currentPage + 1;
+        renderTitleCard(currentPage)
       });
 
 /*
