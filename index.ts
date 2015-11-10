@@ -29,6 +29,7 @@ $(function() {
         .on('swipeleft', handleNext)
         .on('swiperight', handlePrev);
 
+    $('.up-button').on('click', handleUp);
     $('.down-button').on('click', handleDown);
 });
 
@@ -52,9 +53,14 @@ function handleDown(): any {
     changeScreen()
 }
 
+function handleUp(): any {
+    currentRow -= 1;
+    changeScreen()
+}
+
 function changeScreen(duration = 200): any {
     updatePrevNextButtons();
-    updateDownButton();
+    updateUpDownButton();
     doScroll(currentRow, currentColumn, duration);
 }
 
@@ -75,14 +81,19 @@ function updatePrevNextButtons(): any {
     }
 }
 
-function updateDownButton(): any {
-    if (currentRow == 2) {
-        $('.down-button').hide()
+function updateUpDownButton(): any {
+    if (columnsWithContent.indexOf(currentColumn) == -1) {
+        $('.up-button').hide();
+        $('.down-button').hide();
+        return
     }
-    else if (columnsWithContent.indexOf(currentColumn) == -1) {
-        $('.down-button').hide()
+
+    if (currentRow == 1) {
+        $('.up-button').hide();
+        $('.down-button').show();
     }
-    else {
-        $('.down-button').show()
+    else if (currentRow == 2) {
+        $('.up-button').show()
+        $('.down-button').hide()
     }
 }

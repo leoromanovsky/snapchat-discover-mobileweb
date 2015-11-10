@@ -53,6 +53,15 @@ li {
     right: 20px;
 }
 
+.up-button {
+    position: absolute;
+    top: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 100px;
+    right: 0;
+    z-index: 9999;
+}
 .down-button {
     position: absolute;
     top: 85%;

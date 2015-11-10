@@ -17,6 +17,7 @@ $(function () {
     $('.next-button').on('click', handleNext);
     $('.prev-button').on('click', handlePrev);
     $('#wrapper').on('swipeleft', handleNext).on('swiperight', handlePrev);
+    $('.up-button').on('click', handleUp);
     $('.down-button').on('click', handleDown);
 });
 function handleNext() {
@@ -38,10 +39,14 @@ function handleDown() {
     currentRow += 1;
     changeScreen();
 }
+function handleUp() {
+    currentRow -= 1;
+    changeScreen();
+}
 function changeScreen(duration) {
     if (duration === void 0) { duration = 200; }
     updatePrevNextButtons();
-    updateDownButton();
+    updateUpDownButton();
     doScroll(currentRow, currentColumn, duration);
 }
 function doScroll(rowNumber, colNumber, duration) {
@@ -62,15 +67,19 @@ function updatePrevNextButtons() {
         $('.next-button').show();
     }
 }
-function updateDownButton() {
-    if (currentRow == 2) {
+function updateUpDownButton() {
+    if (columnsWithContent.indexOf(currentColumn) == -1) {
+        $('.up-button').hide();
         $('.down-button').hide();
+        return;
     }
-    else if (columnsWithContent.indexOf(currentColumn) == -1) {
-        $('.down-button').hide();
-    }
-    else {
+    if (currentRow == 1) {
+        $('.up-button').hide();
         $('.down-button').show();
+    }
+    else if (currentRow == 2) {
+        $('.up-button').show();
+        $('.down-button').hide();
     }
 }
 //# sourceMappingURL=index.js.map
