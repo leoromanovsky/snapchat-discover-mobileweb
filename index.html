@@ -3,20 +3,28 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="stylesheet" href="fullPage.css" type="text/css" />
   <link rel="stylesheet" href="index.css" type="text/css" />
 
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script src="//cdn.jsdelivr.net/jquery.scrollto/2.1.2/jquery.scrollTo.min.js"></script>
-
-  <script src="jquery.event.move.js"></script>
-  <script src="jquery.event.swipe.js"></script>
+  <script src="fullPage.min.js"></script>
 
   <script src="index.js"></script>
 </head>
 <body>
+  <div id="fullpage">
+    <div id="settings" class="section">Some section</div>
+    <div class="section">Some section</div>
+    <div class="section">Some section</div>
+    <div id="end" class="section">Some section</div>
+  </div>
+
+  <!--
   <div class="prev-button"><img src="images/arrow_left.png" height="64" /></div>
   <div class="next-button"><img src="images/arrow_right.png" height="64" /></div>
   <div class="down-button"><img src="images/arrow_down.png" height="64" /></div>
+
+
 
   <div id="wrapper">
     <div id="mask">
@@ -113,5 +121,6 @@
       </ul>
     </div>
   </div>
+  -->
 </body>
 </html>
