@@ -37,7 +37,7 @@ li {
 }
 
 #contentRow li {
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .prev-button, .next-button {
