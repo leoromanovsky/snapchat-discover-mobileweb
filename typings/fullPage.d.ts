@@ -1,7 +1,11 @@
 /// <reference path="jquery.d.ts"/>
 
+interface FullPageOptions {
+    loopHorizontal?: boolean;
+}
+
 interface JQuery {
     fullpage: {
-        (): any;
+        (options?: FullPageOptions): any;
     }
 }

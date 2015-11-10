@@ -2,5 +2,7 @@
 /// <reference path="typings/fullPage.d.ts"/>
 
 $(function() {
-    $('#fullpage').fullpage();
+    $('#fullpage').fullpage({
+        loopHorizontal: false
+    });
 });
