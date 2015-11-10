@@ -10,6 +10,7 @@ $(function () {
     windowHeight = $(document).height();
     windowWidth = $(document).width();
     $('#mask').css('width', windowWidth * numColumns);
+    $('#mask').css('height', windowHeight * numRows);
     $('li').css('width', windowWidth);
     $('li').css('height', windowHeight);
     changeScreen(0);
@@ -23,17 +24,19 @@ function handleNext() {
         return;
     }
     currentColumn += 1;
-    changeScreen(defaultDuration);
+    changeScreen();
 }
 function handlePrev() {
     if (currentColumn == 1) {
         return;
     }
     currentColumn -= 1;
-    changeScreen(defaultDuration);
+    changeScreen();
 }
 function handleDown() {
     console.log('click down', currentColumn, currentRow);
+    currentRow += 1;
+    changeScreen();
 }
 function changeScreen(duration) {
     if (duration === void 0) { duration = 200; }
@@ -42,9 +45,7 @@ function changeScreen(duration) {
     doScroll(currentRow, currentColumn, duration);
 }
 function doScroll(rowNumber, colNumber, duration) {
-    if (rowNumber === void 0) { rowNumber = 1; }
-    if (colNumber === void 0) { colNumber = 1; }
-    if (duration === void 0) { duration = 200; }
+    if (duration === void 0) { duration = defaultDuration; }
     var top = windowHeight * (rowNumber - 1);
     var left = windowWidth * (colNumber - 1);
     $('#wrapper').scrollTo({ top: top, left: left }, { duration: duration });
@@ -62,7 +63,10 @@ function updatePrevNextButtons() {
     }
 }
 function updateDownButton() {
-    if (columnsWithContent.indexOf(currentColumn) == -1) {
+    if (currentRow == 2) {
+        $('.down-button').hide();
+    }
+    else if (columnsWithContent.indexOf(currentColumn) == -1) {
         $('.down-button').hide();
     }
     else {

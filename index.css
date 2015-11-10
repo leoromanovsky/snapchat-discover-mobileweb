@@ -36,6 +36,10 @@ li {
     display: inline-block;
 }
 
+#contentRow li {
+    overflow-y: auto;
+}
+
 .prev-button, .next-button {
     position: fixed;
     top: 80%;

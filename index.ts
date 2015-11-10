@@ -17,6 +17,7 @@ $(function() {
     windowWidth = $(document).width();
 
     $('#mask').css('width', windowWidth * numColumns);
+    $('#mask').css('height', windowHeight * numRows);
     $('li').css('width', windowWidth);
     $('li').css('height', windowHeight);
 
@@ -35,18 +36,20 @@ function handleNext(): any {
     if (currentColumn == numColumns) { return }
 
     currentColumn += 1;
-    changeScreen(defaultDuration);
+    changeScreen();
 }
 
 function handlePrev(): any {
     if (currentColumn == 1) { return }
 
     currentColumn -= 1;
-    changeScreen(defaultDuration);
+    changeScreen();
 }
 
 function handleDown(): any {
     console.log('click down', currentColumn, currentRow);
+    currentRow += 1;
+    changeScreen()
 }
 
 function changeScreen(duration = 200): any {
@@ -55,7 +58,7 @@ function changeScreen(duration = 200): any {
     doScroll(currentRow, currentColumn, duration);
 }
 
-function doScroll(rowNumber: number = 1, colNumber = 1, duration = 200): any {
+function doScroll(rowNumber: number, colNumber: number, duration: number = defaultDuration): any {
     var top = windowHeight * (rowNumber - 1);
     var left = windowWidth * (colNumber - 1);
     $('#wrapper').scrollTo({ top: top, left: left}, {duration: duration});
@@ -73,9 +76,13 @@ function updatePrevNextButtons(): any {
 }
 
 function updateDownButton(): any {
-    if (columnsWithContent.indexOf(currentColumn) == -1) {
+    if (currentRow == 2) {
         $('.down-button').hide()
-    } else {
+    }
+    else if (columnsWithContent.indexOf(currentColumn) == -1) {
+        $('.down-button').hide()
+    }
+    else {
         $('.down-button').show()
     }
 }
