@@ -79,6 +79,12 @@ function doScroll(rowNumber: number, colNumber: number, duration: number = defau
 }
 
 function updatePrevNextButtons(): any {
+    if (currentRow == 2) {
+        $('.next-button').hide();
+        $('.prev-button').hide();
+        return;
+    }
+
     if (currentColumn == 1) {
         $('.prev-button').hide();
     } else if (currentColumn == numColumns) {
@@ -91,17 +97,14 @@ function updatePrevNextButtons(): any {
 
 function updateUpDownButton(): any {
     if (columnsWithContent.indexOf(currentColumn) == -1) {
-        $('.up-button').hide();
         $('.down-button').hide();
         return
     }
 
     if (currentRow == 1) {
-        $('.up-button').hide();
         $('.down-button').show();
     }
     else if (currentRow == 2) {
-        $('.up-button').show()
         $('.down-button').hide()
     }
 }

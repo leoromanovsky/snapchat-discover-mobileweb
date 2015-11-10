@@ -60,6 +60,11 @@ function doScroll(rowNumber, colNumber, duration) {
     $('#wrapper').scrollTo({ top: top, left: left }, { duration: duration });
 }
 function updatePrevNextButtons() {
+    if (currentRow == 2) {
+        $('.next-button').hide();
+        $('.prev-button').hide();
+        return;
+    }
     if (currentColumn == 1) {
         $('.prev-button').hide();
     }
@@ -73,16 +78,13 @@ function updatePrevNextButtons() {
 }
 function updateUpDownButton() {
     if (columnsWithContent.indexOf(currentColumn) == -1) {
-        $('.up-button').hide();
         $('.down-button').hide();
         return;
     }
     if (currentRow == 1) {
-        $('.up-button').hide();
         $('.down-button').show();
     }
     else if (currentRow == 2) {
-        $('.up-button').show();
         $('.down-button').hide();
     }
 }
