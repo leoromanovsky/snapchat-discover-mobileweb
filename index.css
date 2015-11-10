@@ -16,7 +16,7 @@ html,body {
 }
 
 #mask {
-    width: 300%;
+    width: 400%;
     height: 100%;
     position: absolute;
     background-color: #ccc;
@@ -24,10 +24,10 @@ html,body {
 }
 
 .column {
-    width:33.3%;
-    height:100%;
-    float:left;
-    background-color:#ddd;
+    width:25%;
+    height: 100%;
+    float: left;
+    background-color: #ddd;
 }
 
 .prev-button, .next-button {
