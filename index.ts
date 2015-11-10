@@ -1,18 +1,18 @@
 /// <reference path="typings/jquery.d.ts"/>
 /// <reference path="typings/jquery.scrollTo.d.ts"/>
 
-var currentPage = 1;
-var pages = ['page0', 'page1', 'page2'];
+var currentPage = 2;
+var numPages = 4;
 var defaultScrollToOptions = {duration: 200};
 
 $(function() {
-    doScroll('#page1', {duration: 0});
+    doScroll(pageId(), {duration: 0});
     updatePrevNextButtons();
 
     $('.next-button').on('click', function() {
         console.log('click next-button', currentPage);
 
-        if (currentPage == (pages.length - 1)) { return }
+        if (currentPage == numPages) { return }
 
         currentPage += 1;
         updatePrevNextButtons();
@@ -21,7 +21,7 @@ $(function() {
 
     $('.prev-button').on('click', function() {
         console.log('click prev-button', currentPage);
-        if (currentPage == 0) { return }
+        if (currentPage == 1) { return }
 
         currentPage -= 1;
         updatePrevNextButtons();
@@ -30,7 +30,7 @@ $(function() {
 });
 
 function pageId(): string {
-    return `#${pages[currentPage]}`;
+    return `#page${currentPage}`;
 }
 
 function doScroll(element: string, options?: ScrollToOptions): any {
@@ -38,9 +38,9 @@ function doScroll(element: string, options?: ScrollToOptions): any {
 }
 
 function updatePrevNextButtons(): any {
-    if (currentPage == 0) {
+    if (currentPage == 1) {
         $('.prev-button').hide();
-    } else if (currentPage == (pages.length - 1)) {
+    } else if (currentPage == numPages) {
         $('.next-button').hide();
     } else {
         $('.prev-button').show();
