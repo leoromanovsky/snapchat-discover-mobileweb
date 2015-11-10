@@ -7,27 +7,33 @@ html,body {
 }
 
 #wrapper {
-    width:100%;
-    height:100%;
-    position:absolute;
+    width: 100%;
+    height: 100%;
+    position: absolute;
     top:0;left:0;
     background-color:#ccc;
     overflow:hidden;
 }
 
 #mask {
-    width: 400%;
     height: 100%;
     position: absolute;
     background-color: #ccc;
     overflow: hidden;
 }
 
-.column {
-    width: 25%;
-    height: 100%;
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     float: left;
     background-color: #ddd;
+    display: inline-block;
 }
 
 .prev-button, .next-button {
@@ -43,9 +49,19 @@ html,body {
     right: 20px;
 }
 
-#page0 { background-color: #BBE8FF }
-#page1 { background-color: #A7FFE9 }
-#page2 { background-color: #FF80B3 }
+.down-button {
+    position: absolute;
+    top: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 100px;
+    right: 0;
+    z-index: 9999;
+}
+
+#header0 { background-color: #BBE8FF }
+#header1 { background-color: #A7FFE9 }
+#header2 { background-color: #FF80B3 }
 
 .clear {
     clear: both;
