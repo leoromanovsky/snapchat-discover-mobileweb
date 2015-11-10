@@ -35,6 +35,9 @@ $(function() {
 
 function handleNext(): any {
     if (currentColumn == numColumns) { return }
+    if (currentRow == 2) {
+        currentRow -= 1
+    }
 
     currentColumn += 1;
     changeScreen();
@@ -42,6 +45,9 @@ function handleNext(): any {
 
 function handlePrev(): any {
     if (currentColumn == 1) { return }
+    if (currentRow == 2) {
+        currentRow -= 1
+    }
 
     currentColumn -= 1;
     changeScreen();

@@ -24,12 +24,18 @@ function handleNext() {
     if (currentColumn == numColumns) {
         return;
     }
+    if (currentRow == 2) {
+        currentRow -= 1;
+    }
     currentColumn += 1;
     changeScreen();
 }
 function handlePrev() {
     if (currentColumn == 1) {
         return;
+    }
+    if (currentRow == 2) {
+        currentRow -= 1;
     }
     currentColumn -= 1;
     changeScreen();
