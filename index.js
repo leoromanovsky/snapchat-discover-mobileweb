@@ -9,12 +9,18 @@ var columnsWithContent = [2, 3];
 $(function () {
     windowHeight = $(document).height();
     windowWidth = $(document).width();
-    $('#mask').css('width', windowWidth * numColumns).css('height', windowHeight * numRows + 10000);
-    $('li.cell').css('width', windowWidth).css('height', windowHeight);
+    $('#mask')
+        .css('width', windowWidth * numColumns)
+        .css('height', windowHeight * numRows + 10000);
+    $('li.cell')
+        .css('width', windowWidth)
+        .css('height', windowHeight);
     changeScreen(0);
     $('.next-button').on('click', handleNext);
     $('.prev-button').on('click', handlePrev);
-    $('#wrapper').on('swipeleft', handleNext).on('swiperight', handlePrev);
+    $('#wrapper')
+        .on('swipeleft', handleNext)
+        .on('swiperight', handlePrev);
     $('.up-button').on('click', handleUp);
     $('.down-button').on('click', handleDown);
 });
