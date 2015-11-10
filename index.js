@@ -10,7 +10,7 @@ $(function () {
     windowHeight = $(document).height();
     windowWidth = $(document).width();
     $('#mask').css('width', windowWidth * numColumns);
-    $('#mask').css('height', windowHeight * numRows);
+    $('#mask').css('height', windowHeight * numRows + 10000);
     $('li').css('width', windowWidth);
     $('li').css('height', windowHeight);
     changeScreen(0);
