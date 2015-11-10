@@ -6,25 +6,28 @@ var defaultScrollToOptions = { duration: 200 };
 $(function () {
     doScroll(pageId(), { duration: 0 });
     updatePrevNextButtons();
-    $('.next-button').on('click', function () {
-        console.log('click next-button', currentPage);
-        if (currentPage == numPages) {
-            return;
-        }
-        currentPage += 1;
-        updatePrevNextButtons();
-        doScroll(pageId(), defaultScrollToOptions);
-    });
-    $('.prev-button').on('click', function () {
-        console.log('click prev-button', currentPage);
-        if (currentPage == 1) {
-            return;
-        }
-        currentPage -= 1;
-        updatePrevNextButtons();
-        doScroll(pageId(), defaultScrollToOptions);
-    });
+    $('.next-button').on('click', handleNext);
+    $('.prev-button').on('click', handlePrev);
+    $('#wrapper').on('swipeleft', handleNext).on('swiperight', handlePrev);
 });
+function handleNext() {
+    console.log('click next-button', currentPage);
+    if (currentPage == numPages) {
+        return;
+    }
+    currentPage += 1;
+    updatePrevNextButtons();
+    doScroll(pageId(), defaultScrollToOptions);
+}
+function handlePrev() {
+    console.log('click prev-button', currentPage);
+    if (currentPage == 1) {
+        return;
+    }
+    currentPage -= 1;
+    updatePrevNextButtons();
+    doScroll(pageId(), defaultScrollToOptions);
+}
 function pageId() {
     return "#page" + currentPage;
 }
