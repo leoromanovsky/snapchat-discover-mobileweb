@@ -59,10 +59,19 @@ var FullPageManager = (function () {
     FullPageManager.prototype.documentHeight = function () {
         return this.docHeight;
     };
+    FullPageManager.prototype.completePolyline = function (journey) {
+        return journey.map(function (j) {
+            return encodeURIComponent(j.encodedPolyline);
+        }).join('');
+    };
     FullPageManager.prototype.dynamicSection = function (journey, active) {
         if (active === void 0) { active = false; }
         var that = this;
-        var slides = journey.map(function (j) {
+        var slides = '';
+        // First slide has the complete polyline.
+        //var slides = `<div class="slide"><img src="${mapboxStaticMap(`path-5+f44+f44(${this.completePolyline(journey)})/auto/${mapboxMapSize(that.documentWidth(), that.documentHeight())}.png`)}" width="${that.documentWidth()}" height="${that.documentHeight()}" /></div>`;
+        // The rest of the slides.
+        slides += journey.map(function (j) {
             var map = "<div class=\"slide\"><img src=\"" + mapboxStaticMap("path-5+f44+f44(" + encodeURIComponent(j.encodedPolyline) + ")/auto/" + mapboxMapSize(that.documentWidth(), that.documentHeight()) + ".png") + "\" width=\"" + that.documentWidth() + "\" height=\"" + that.documentHeight() + "\" /></div>";
             if (j.instagramIds.length > 0) {
                 map += j.instagramIds.map(function (instagramId) {

@@ -75,10 +75,21 @@ class FullPageManager {
         return this.docHeight
     }
 
+    completePolyline(journey: Array<Activity>): string {
+        return journey.map(function(j) {
+            return encodeURIComponent(j.encodedPolyline)
+        }).join('')
+    }
+
     dynamicSection(journey: Array<Activity>, active: boolean = false): Section {
         var that = this;
+        var slides: string = '';
 
-        var slides: string = journey.map(function(j) {
+        // First slide has the complete polyline.
+        //var slides = `<div class="slide"><img src="${mapboxStaticMap(`path-5+f44+f44(${this.completePolyline(journey)})/auto/${mapboxMapSize(that.documentWidth(), that.documentHeight())}.png`)}" width="${that.documentWidth()}" height="${that.documentHeight()}" /></div>`;
+
+        // The rest of the slides.
+        slides += journey.map(function(j) {
             var map = `<div class="slide"><img src="${mapboxStaticMap(`path-5+f44+f44(${encodeURIComponent(j.encodedPolyline)})/auto/${mapboxMapSize(that.documentWidth(), that.documentHeight())}.png`)}" width="${that.documentWidth()}" height="${that.documentHeight()}" /></div>`;
 
             if (j.instagramIds.length > 0) {
