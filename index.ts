@@ -13,7 +13,7 @@ function instagramUrl(id, requestedWidth: number): string {
 }
 
 function mapboxStaticMap(arg: string): string {
-    return `https://api.mapbox.com/v4/mapbox.streets/${arg}?access_token=${mapboxAccessToken}`
+    return `https://api.mapbox.com/v4/stravalr.lo8l8hlh/${arg}?access_token=${mapboxAccessToken}`
 }
 
 function mapboxMapSize(height: number, width: number): string {

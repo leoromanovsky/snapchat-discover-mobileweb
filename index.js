@@ -14,7 +14,7 @@ function instagramUrl(id, requestedWidth) {
     return "https://www.instagram.com/p/" + id + "/media?size=" + size;
 }
 function mapboxStaticMap(arg) {
-    return "https://api.mapbox.com/v4/mapbox.streets/" + arg + "?access_token=" + mapboxAccessToken;
+    return "https://api.mapbox.com/v4/stravalr.lo8l8hlh/" + arg + "?access_token=" + mapboxAccessToken;
 }
 function mapboxMapSize(height, width) {
     return height + "x" + width;
