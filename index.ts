@@ -3,7 +3,7 @@
 
 $(function() {
     $('#fullpage').fullpage({
-        loopHorizontal: false
+        loopHorizontal: false,
+        slidesNavigation: true
     });
 });
-

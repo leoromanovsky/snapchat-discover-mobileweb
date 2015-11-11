@@ -2,7 +2,8 @@
 /// <reference path="typings/fullPage.d.ts"/>
 $(function () {
     $('#fullpage').fullpage({
-        loopHorizontal: false
+        loopHorizontal: false,
+        slidesNavigation: true
     });
 });
 //# sourceMappingURL=index.js.map

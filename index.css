@@ -1,3 +1,26 @@
-.section { background-color: #A7FFE9 }
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.section { background-color: black }
 #settings { background-color: #BBE8FF }
-#end { background-color: #FF80B3 }
+
+#end {
+    background-color: black
+}
+
+#endContent {
+    padding: 20px;
+}
+#endContent h1 {
+    color: #FC4C02;
+    font-weight: 600;
+}
+
+#endContent h2 {
+    color: white;
+    font-weight: 300;
+}
+#endContent .labslogo {
+    margin-top: 60px;
+}
