@@ -2,6 +2,8 @@
 
 interface FullPageOptions {
     loopHorizontal?: boolean;
+    slidesNavigation?: boolean;
+    verticalCentered?: boolean;
 }
 
 interface JQuery {

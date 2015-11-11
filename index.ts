@@ -7,4 +7,8 @@ $(function() {
         slidesNavigation: true,
         verticalCentered: false
     });
+
+    setTimeout(function() {
+        $('#loader').fadeOut(1000)
+    }, 1500);
 });
