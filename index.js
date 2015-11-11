@@ -3,7 +3,8 @@
 $(function () {
     $('#fullpage').fullpage({
         loopHorizontal: false,
-        slidesNavigation: true
+        slidesNavigation: true,
+        verticalCentered: false
     });
 });
 //# sourceMappingURL=index.js.map
