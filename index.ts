@@ -1,4 +1,5 @@
 /// <reference path="typings/jquery.d.ts"/>
+/// <reference path="typings/es6-promise.d.ts"/>
 /// <reference path="typings/fullPage.d.ts"/>
 
 var mapboxAccessToken: string = "pk.eyJ1Ijoic3RyYXZhbHIiLCJhIjoiQjV5dllkNCJ9.Jso5bao3AOEvB1NjbkPJXg";
@@ -190,7 +191,28 @@ class LastPage extends Section {
     }
 }
 
+function loadData(): Promise<Array<Activity>> {
+    return new Promise(function(resolve, reject) {
+        var args = {
+            url: "https://d3fgbtl4ah93i4.cloudfront.net/ignis/journeys/run5.json",
+            dataType: 'json',
+            success: function(data) {
+                resolve(data)
+            },
+            error: function(error) {
+                reject(error)
+            }
+        };
+        console.log('start');
+        jQuery.ajax(args)
+    });
+}
+
 $(function() {
+    loadData().then(function(data) {
+        console.log("data!", data);
+    });
+
     var docHeight = $(document).height();
     var docWidth = $(document).width();
 

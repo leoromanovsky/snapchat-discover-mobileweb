@@ -1,4 +1,5 @@
 /// <reference path="typings/jquery.d.ts"/>
+/// <reference path="typings/es6-promise.d.ts"/>
 /// <reference path="typings/fullPage.d.ts"/>
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -132,7 +133,26 @@ var LastPage = (function (_super) {
     };
     return LastPage;
 })(Section);
+function loadData() {
+    return new Promise(function (resolve, reject) {
+        var args = {
+            url: "https://d3fgbtl4ah93i4.cloudfront.net/ignis/journeys/run5.json",
+            dataType: 'json',
+            success: function (data) {
+                resolve(data);
+            },
+            error: function (error) {
+                reject(error);
+            }
+        };
+        console.log('start');
+        jQuery.ajax(args);
+    });
+}
 $(function () {
+    loadData().then(function (data) {
+        console.log("data!", data);
+    });
     var docHeight = $(document).height();
     var docWidth = $(document).width();
     var pageManager = new FullPageManager(docHeight, docWidth);
